@@ -1,13 +1,13 @@
 angular.module('angular-bs-confirm', [])
-.directive('tooltip', function() {
+.directive('confirm', function() {
 	return {
 		scope: {
-			tooltipConfirm: '&?', // Run this on confirm
-			tooltipCancel: '&?', // Run this on cancel
-			tooltipConfirmText: '@',
-			tooltipConfirmPosition: '@?',
-			tooltipConfirmContainer: '@?',
-			tooltipConfirmTrigger: '@?'
+			confirm: '&?', // Run this on confirm
+			cancel: '&?', // Run this on cancel
+			confirmText: '@',
+			confirmPosition: '@?',
+			confirmContainer: '@?',
+			confirmTrigger: '@?'
 		},
 		restrict: 'A',
 		controller: function($scope) {
