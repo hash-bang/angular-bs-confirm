@@ -31,7 +31,7 @@ angular.module('angular-bs-confirm', [])
 							'<div class="tooltip-confirm">' +
 								'<div class="tooltip-confirm-text">' + ($scope.confirmText || 'Are you sure?') + '</div>' +
 								'<div class="tooltip-confirm-btn-group">' +
-									'<a class="btn btn-xs btn-success tooltip-confirm-btn-confirm">Yes</a>' +
+									'<a class="btn btn-xs btn-success tooltip-confirm-btn-confirm" style="margin-right: 4px;">Yes</a>' +
 									'<a class="btn btn-xs btn-danger tooltip-confirm-btn-cancel">No</a>' +
 								'</div>' +
 							'</div>',
