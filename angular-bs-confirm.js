@@ -4,7 +4,7 @@ angular.module('angular-bs-confirm', [])
 		scope: {
 			confirm: '&?', // Run this on confirm
 			cancel: '&?', // Run this on cancel
-			confirmText: '@',
+			confirmText: '@?',
 			confirmPosition: '@?',
 			confirmContainer: '@?',
 			confirmTrigger: '@?'
@@ -12,33 +12,33 @@ angular.module('angular-bs-confirm', [])
 		restrict: 'A',
 		controller: function($scope) {
 			$scope.doConfirm = function() {
-				if ($scope.tooltipConfirm)
-					$scope.$eval($scope.tooltipConfirm);
+				if ($scope.confirm)
+					$scope.$eval($scope.confirm);
 			};
 
 			$scope.doCancel = function() {
-				if ($scope.tooltipConfirmCancel)
-					$scope.$eval($scope.tooltipConfirmCancel);
+				if ($scope.cancel)
+					$scope.$eval($scope.cancel);
 			};
 		},
 		link: function($scope, elem) {
-			$scope.$watch('tooltipConfirm + tooltipConfirmText + tooltipPConfirmosition + tooltipCConfirmontainer + tooltipConfirmTrigger', function() {
+			$scope.$watch('confirmText + confirmPosition + confirmContainer + containTrigger', function() {
 				var isVisible = $(elem).siblings('.tooltip').length > 0; // Is the tooltip already shown?
 				$(elem)
 					.tooltip('destroy')
 					.tooltip({
 						title: 
 							'<div class="tooltip-confirm">' +
-								'<div class="tooltip-confirm-text">' + ($scope.tooltip || 'Are you sure?') + '</div>' +
+								'<div class="tooltip-confirm-text">' + ($scope.confirmText || 'Are you sure?') + '</div>' +
 								'<div class="tooltip-confirm-btn-group">' +
 									'<a class="btn btn-xs btn-success tooltip-confirm-btn-confirm">Yes</a>' +
 									'<a class="btn btn-xs btn-danger tooltip-confirm-btn-cancel">No</a>' +
 								'</div>' +
 							'</div>',
 						html: true,
-						placement: $scope.tooltipConfirmPosition || 'top',
-						container: $scope.tooltipConfirmContainer || null,
-						trigger: $scope.tooltipConfirmTrigger || 'click',
+						placement: $scope.confirmPosition || 'top',
+						container: $scope.confirmContainer || null,
+						trigger: $scope.confirmTrigger || 'click',
 						animation: false
 					})
 					.on('show.bs.tooltip', function(e) {
