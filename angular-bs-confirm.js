@@ -41,19 +41,18 @@ angular.module('angular-bs-confirm', [])
 						trigger: $scope.confirmTrigger || 'click',
 						animation: false
 					})
-					.on('show.bs.tooltip', function(e) {
-						if (!$(this).data('ng.tooltip-confirm')) { // Not yet attached events
-							$(this).data('bs.tooltip').$tip // Shown - bind to click of buttons
-								.on('click', '.tooltip-confirm-btn-confirm', function() {
-									$(elem).tooltip('hide');
-									$scope.$apply($scope.doConfirm);
-								})
-								.on('click', '.tooltip-confirm-btn-cancel', function() {
-									$(elem).tooltip('hide');
-									$scope.$apply($scope.doCancel);
-								});
-							$(this).data('ng.tooltip-confirm', true);
-						}
+					.on('shown.bs.tooltip', function(e) {
+						$(this).data('bs.tooltip').$tip // Shown - bind to click of buttons
+							.off('click', '.tooltip-confirm-btn-confirm')
+							.on('click', '.tooltip-confirm-btn-confirm', function() {
+								$(elem).tooltip('hide');
+								$scope.$apply($scope.doConfirm);
+							})
+							.off('click', '.tooltip-confirm-btn-cancel')
+							.on('click', '.tooltip-confirm-btn-cancel', function() {
+								$(elem).tooltip('hide');
+								$scope.$apply($scope.doCancel);
+							});
 					});
 
 				if (isVisible) // Reshow the tooltip if we WERE using it before
