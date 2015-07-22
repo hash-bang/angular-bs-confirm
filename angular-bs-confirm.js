@@ -6,25 +6,29 @@ angular.module('angular-bs-confirm', [])
 			cancel: '&?', // Run this on cancel
 			confirmText: '@?',
 			confirmPosition: '@?',
-			confirmContainer: '@?',
-			confirmTrigger: '@?'
+			confirmContainer: '@?'
 		},
 		restrict: 'A',
-		controller: function($scope) {
+		controller: function($scope, $element) {
+			$scope.isShown = false;
+
 			$scope.doConfirm = function() {
+				$scope.isShown = false;
 				if ($scope.confirm)
 					$scope.$eval($scope.confirm);
 			};
 
 			$scope.doCancel = function() {
+				$scope.isShown = false;
 				if ($scope.cancel)
 					$scope.$eval($scope.cancel);
 			};
-		},
-		link: function($scope, elem) {
-			$scope.$watchGroup(['confirm', 'cancel', 'confirmText', 'confirmPosition', 'confirmContainer', 'containTrigger'], function() {
-				var isVisible = $(elem).siblings('.tooltip').length > 0; // Is the tooltip already shown?
-				$(elem)
+
+			// Watcher + refresher {{{
+			$scope.refresh = function() {
+				if (!$scope.isShown) return;
+
+				$element
 					.tooltip('destroy')
 					.tooltip({
 						title: 
@@ -38,25 +42,32 @@ angular.module('angular-bs-confirm', [])
 						html: true,
 						placement: $scope.confirmPosition || 'top',
 						container: $scope.confirmContainer || null,
-						trigger: $scope.confirmTrigger || 'click',
+						trigger: 'manual',
 						animation: false
 					})
 					.on('shown.bs.tooltip', function(e) {
 						$(this).data('bs.tooltip').$tip // Shown - bind to click of buttons
 							.off('click', '.tooltip-confirm-btn-confirm')
 							.on('click', '.tooltip-confirm-btn-confirm', function() {
-								$(elem).tooltip('hide');
+								$element.tooltip('hide');
 								$scope.$apply($scope.doConfirm);
 							})
 							.off('click', '.tooltip-confirm-btn-cancel')
 							.on('click', '.tooltip-confirm-btn-cancel', function() {
-								$(elem).tooltip('hide');
+								$element.tooltip('hide');
 								$scope.$apply($scope.doCancel);
 							});
-					});
+					})
+					.tooltip('show');
+			};
 
-				if (isVisible) // Reshow the tooltip if we WERE using it before
-					$(elem).tooltip('show');
+			$scope.$watchGroup(['confirm', 'cancel', 'confirmText', 'confirmPosition', 'confirmContainer'], $scope.refresh);
+			// }}}
+		},
+		link: function($scope, $element) {
+			$element.bind('click', function() {
+				$scope.isShown = true;
+				$scope.refresh();
 			});
 		}
 	}
