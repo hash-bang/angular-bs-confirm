@@ -50,6 +50,7 @@ angular.module('angular-bs-confirm', [])
 								})
 								.on('click', '.tooltip-confirm-btn-cancel', function() {
 									$(elem).tooltip('hide');
+									$scope.$apply($scope.doCancel);
 								});
 							$(this).data('ng.tooltip-confirm', true);
 						}
