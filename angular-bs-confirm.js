@@ -22,7 +22,7 @@ angular.module('angular-bs-confirm', [])
 			};
 		},
 		link: function($scope, elem) {
-			$scope.$watch('confirmText + confirmPosition + confirmContainer + containTrigger', function() {
+			$scope.$watchGroup(['confirm', 'cancel', 'confirmText', 'confirmPosition', 'confirmContainer', 'containTrigger'], function() {
 				var isVisible = $(elem).siblings('.tooltip').length > 0; // Is the tooltip already shown?
 				$(elem)
 					.tooltip('destroy')
