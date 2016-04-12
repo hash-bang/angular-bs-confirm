@@ -1,6 +1,6 @@
 {
   "name": "angular-bs-confirm",
-  "version": "1.1.0",
+  "version": "0.0.0",
   "authors": [
     "Matt Carter <m@ttcarter.com>"
   ],
@@ -10,7 +10,8 @@
     "angular",
     "bootstrap",
     "confirm",
-    "prompt"
+    "prompt",
+    "ui"
   ],
   "license": "MIT",
   "homepage": "http://momsfriendlydevco.github.io/ng-mfdc",
