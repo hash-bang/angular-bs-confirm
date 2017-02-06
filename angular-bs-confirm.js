@@ -107,6 +107,8 @@ angular.module('angular-bs-confirm', [])
 		},
 		link: function($scope, $element) {
 			$element.bind('click', function(e) {
+				var disabled = $element.attr('disabled');
+		        	if (disabled) return;
 				$scope.setParent($(e.target));
 				$scope.setShown(true);
 				$scope.refresh();
